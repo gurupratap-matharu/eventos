@@ -1,0 +1,19 @@
+{% load tz %}
+
+{% localtime on %}
+    {{ value }}
+{% endlocaltime %}
+
+{% localtime off %}
+    {{ value }}
+{% endlocaltime %}
+
+{% if event_list %}
+    <ul>
+    {% for event in event_list %}
+       <h3><li><a href="/eventos/{{ event.id }}/">{{ event.event_description }}</a></li></h3>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No events are available.</p>
+{% endif %}
