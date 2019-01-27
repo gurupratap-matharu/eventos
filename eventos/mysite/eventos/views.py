@@ -3,6 +3,9 @@ import pytz
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse
+
+from django.views import generic
+
 from .models import Event, Country
 from .forms import RegisterForm
 
@@ -39,9 +42,7 @@ def registerEvent(request):
 
             Event.objects.create(event_description=event_description, event_date=event_date, event_time=event_time, event_country=event_country)
 
-            event_list = Event.objects.all()
-            context = {'event_list': event_list}
-            return render(request, 'eventos/list.html', context)
+            return HttpResponseRedirect(reverse('eventos:list'))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -50,22 +51,25 @@ def registerEvent(request):
     return render(request, 'eventos/form.html', {'form': form})
 
 
-def listEvent(request):
+class ListEvent(generic.ListView):
     """
     The view function to list all the events in the database.
     """
-    event_list = Event.objects.all()
-    context = {'event_list': event_list}
-    return render(request, 'eventos/list.html', context)
+    template_name = 'eventos/list.html'
+    context_object_name = 'event_list'
+
+    def get_queryset(self):
+        """Return all the events registered so far."""
+        return Event.objects.all()
 
 
-def detailEvent(request, event_id):
+class DetailEvent(generic.DetailView):
     """
     The view function that show the detail of each event like the
     date, time and country.
     """
-    event = get_object_or_404(Event, pk=event_id)
-    return render(request, 'eventos/detail.html', {'event': event})
+    model = Event
+    template_name = 'eventos/detail.html'
 
 
 def set_timezone(request):

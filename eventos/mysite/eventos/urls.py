@@ -7,10 +7,10 @@ urlpatterns = [
     # ex: /
     path('', views.index, name='index'),
     # ex: /eventos/list
-    path('list/', views.listEvent, name='list'),
+    path('list/', views.ListEvent.as_view(), name='list'),
     # ex: /eventos/register
     path('register/', views.registerEvent, name='register'),
     # ex: /eventos/5/
-    path('<int:event_id>/', views.detailEvent, name='detail'),
-        
-    ]   
+    path('<int:pk>/', views.DetailEvent.as_view(), name='detail'),
+
+]
