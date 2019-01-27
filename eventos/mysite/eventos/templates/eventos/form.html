@@ -1,7 +1,11 @@
-<h2>Register You Event Here.</h2>
+
 <form action="" method="post">
     {% csrf_token %}
-    {{ form }}
+    <<table>
+        <caption>REGISTER YOU EVENT</caption>
+        {{ form.as_table }}
+    </table>
+
     <input type="submit" value="Register">
 </form>
 

@@ -1,4 +1,4 @@
-#!/home/veer/Desktop/code/diego/eventos/venv/bin/python3
+#!/Users/admin/Desktop/code/django/eventos/eventos/venv/bin/python
 
 # -*- coding: utf-8 -*-
 import re

@@ -13,12 +13,12 @@ def index(request):
     of register a new event.
     """
     return render(request, 'eventos/index.html')
-    
+
+
 def registerEvent(request):
     """
     Our view function to register an event in the database.
     """
-    
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -29,26 +29,27 @@ def registerEvent(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            event_description = form.cleaned_data['Event']
-            event_date = form.cleaned_data['Event Date']
-            event_time = form.cleaned_data['Event Time']
-            event_country = form.cleaned_data['Event Country']
+            event_description = form.cleaned_data['event_description']
+            event_date = form.cleaned_data['event_date']
+            event_time = form.cleaned_data['event_time']
+            event_country = form.cleaned_data['event_country']
             print(event_description)
             print(event_date)
             print(event_country)
 
-            Event.objects.create(event_description=event_description,event_date=event_date, event_time=event_time, event_country=event_country)
-            
+            Event.objects.create(event_description=event_description, event_date=event_date, event_time=event_time, event_country=event_country)
+
             event_list = Event.objects.all()
             context = {'event_list': event_list}
             return render(request, 'eventos/list.html', context)
-            
+
     # if a GET (or any other method) we'll create a blank form
     else:
         form = RegisterForm()
 
     return render(request, 'eventos/form.html', {'form': form})
-    
+
+
 def listEvent(request):
     """
     The view function to list all the events in the database.
@@ -56,7 +57,7 @@ def listEvent(request):
     event_list = Event.objects.all()
     context = {'event_list': event_list}
     return render(request, 'eventos/list.html', context)
-    
+
 
 def detailEvent(request, event_id):
     """
@@ -65,7 +66,8 @@ def detailEvent(request, event_id):
     """
     event = get_object_or_404(Event, pk=event_id)
     return render(request, 'eventos/detail.html', {'event': event})
-    
+
+
 def set_timezone(request):
     if request.method == 'POST':
         request.session['django_timezone'] = request.POST['timezone']
